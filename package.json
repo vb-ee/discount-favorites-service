@@ -8,7 +8,8 @@
         "dev:build": "tsc -w",
         "dev:run": "nodemon dist/server.js",
         "dev": "concurrently npm:dev:*",
-        "start": "node dist/server.js"
+        "start": "node dist/server.js",
+        "seed": "node dist/seed.js"
     },
     "keywords": [],
     "author": "",
@@ -23,7 +24,7 @@
         "typescript": "^4.9.5"
     },
     "dependencies": {
-        "@payhasly-discount/common": "^2.3.5",
+        "@payhasly-discount/common": "^2.3.7",
         "cors": "^2.8.5",
         "express": "^4.18.2",
         "express-async-handler": "^1.2.0",

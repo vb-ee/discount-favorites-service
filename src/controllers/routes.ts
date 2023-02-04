@@ -8,10 +8,11 @@ import { authHandler, Tokens } from '@payhasly-discount/common'
 
 const router = express.Router()
 
+router.use(authHandler(Tokens.accessToken, 'JWT_ACCESS'))
 router
     .route('/favorites')
     .get(getFavorites)
-    .post(authHandler(Tokens.accessToken, 'JWT_ACCESS'), addToFavorites)
-    .delete(authHandler(Tokens.accessToken, 'JWT_ACCESS'), deleteFromFavorites)
+    .post(addToFavorites)
+    .delete(deleteFromFavorites)
 
 export = router

@@ -1,4 +1,5 @@
 import { model, Schema, Types } from 'mongoose'
+import { Favorite } from './Favorite'
 
 // Create an interface representing a document in MongoDB.
 export interface IUser {
@@ -19,5 +20,16 @@ export const userSchema = new Schema<IUser>(
         versionKey: false
     }
 )
+
+userSchema.post('findOneAndDelete', async function (doc, next) {
+    await Favorite.deleteMany({ userId: doc.id })
+    next()
+})
+
+userSchema.virtual('discounts', {
+    ref: 'Favorite',
+    localField: 'id',
+    foreignField: 'userId'
+})
 
 export const User = model<IUser>('User', userSchema)

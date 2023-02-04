@@ -1,4 +1,5 @@
 import { model, Schema, Types } from 'mongoose'
+import { Favorite } from './Favorite'
 
 // Create an interface representing a document in MongoDB.
 export interface IDiscount {
@@ -24,10 +25,17 @@ export const discountSchema = new Schema<IDiscount>(
         toJSON: {
             transform(doc, ret) {
                 delete ret._id
-            }
+            },
+            virtuals: true
         },
+        toObject: { virtuals: true },
         versionKey: false
     }
 )
+
+discountSchema.post('findOneAndDelete', async function (doc, next) {
+    await Favorite.deleteMany({ discountId: doc.id })
+    next()
+})
 
 export const Discount = model<IDiscount>('Discount', discountSchema)
